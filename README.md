@@ -1,2 +1,11 @@
 # ScoreStream-core
-Make a working product that is based on consistent-tempo pieces and just distributes the duration of the audio uniformly among all the bars. (communism_basic)
+A tool to combine score images and audio streams into videos.
+
+# Features
+
+
+# How to get started
+
+
+# Future Product Roadmap
+
