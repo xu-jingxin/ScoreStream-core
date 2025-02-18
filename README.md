@@ -16,17 +16,27 @@ Install pipx
 ```commandline
 python -m pip install --user pipx
 ```
-Add "C:\Users\charl\AppData\Roaming\Python\Python312\Scripts" to your PATH. Relaunch your terminal or IDE.
+Add "C:\Users\<User>\AppData\Roaming\Python\Python312\Scripts" to your PATH. Relaunch your terminal or IDE.
 
 Install Poetry
 ```commandline
 pipx install poetry
 pipx ensurepath
 ```
-Install packages
+Install packages with Poetry
 ```commandline
 poetry install
 ```
+
+Install MiniConda based on instructions from https://docs.anaconda.com/miniconda/install/. 
+
+Install packages with Conda
+```commandline
+conda install -f environment.yaml
+```
+
+
+
 
 # Future Product Roadmap
 
