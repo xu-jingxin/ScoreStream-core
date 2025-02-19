@@ -14,9 +14,8 @@ scoop install python312
 
 Install pipx
 ```commandline
-python -m pip install --user pipx
+scoop install pipx
 ```
-Add "C:\Users\<User>\AppData\Roaming\Python\Python312\Scripts" to your PATH. Relaunch your terminal or IDE.
 
 Install Poetry
 ```commandline
@@ -28,7 +27,10 @@ Install packages with Poetry
 poetry install
 ```
 
-Install MiniConda based on instructions from https://docs.anaconda.com/miniconda/install/. 
+Install MiniConda
+```commandline
+scoop install miniconda3
+```
 
 Install packages with Conda
 ```commandline
