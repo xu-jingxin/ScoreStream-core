@@ -1,5 +1,6 @@
 - tell the start and end time in seconds of an input audio, to find the total duration.
 - get lilypond to work, so I can see how it does pages, and whether output png images
 / can be set to a specific dimension (longish rectangle)
+- video generation
 
 - then do UI stuff

@@ -2,8 +2,16 @@ from music21 import converter, stream
 import subprocess
 from timeit import default_timer as timer
 from datetime import timedelta
+import librosa
 
 input_pdf_filepath = "C:/Users/jingx/Downloads/Polonaise.pdf"
+input_audio_filepath = (
+    "C:/Users/jingx/git_wa/ScoreStream-core/Polonaise_audio_1st_pg.mp3"
+)
+
+duration = librosa.get_duration(path=input_audio_filepath)
+print("duration: ", duration)
+
 
 start = timer()
 
@@ -24,12 +32,17 @@ end = timer()
 print(timedelta(seconds=end - start))
 
 polonaise = converter.parse("../Polonaise.mxl")
-# polonaise.show("lily")
 
 stream_of_bars = (
     polonaise.flatten(retainContainers=True)
     .getElementsByClass(stream.base.Measure)
     .stream()
 )
-stream_of_bars.show("text")
-print(stream_of_bars[-1].number)
+polonaise.show("lily")
+last_bar = stream_of_bars[-1].number
+
+seconds_per_bar = duration / last_bar
+
+
+def end_time(bar_number: int):
+    bar_number * seconds_per_bar
