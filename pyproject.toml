@@ -6,9 +6,10 @@ authors = [
     {name = "jingxin",email = "xujingxin07@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<4.0"
 dependencies = [
-    "music21 (>=9.3.0,<10.0.0)"
+    "music21 (>=9.3.0,<10.0.0)",
+    "conda-lock (>=2.5.7,<3.0.0)"
 ]
 
 
@@ -19,3 +20,5 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
 
+[tool.poetry]
+package-mode = false
