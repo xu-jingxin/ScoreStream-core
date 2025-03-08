@@ -6,6 +6,8 @@ A tool to combine score images and audio streams into videos.
 
 # How to get started
 
+You need Audiveris
+
 Install Python 3.12 via Scoop
 ```commandline
 scoop bucket add versions
