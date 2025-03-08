@@ -34,7 +34,7 @@ scoop install miniconda3
 
 Install packages with Conda
 ```commandline
-conda install -f environment.yaml
+conda env create -f environment.yaml
 ```
 
 
