@@ -15,18 +15,18 @@ print("duration: ", duration)
 
 start = timer()
 
-result = subprocess.run(
-    [
-        "C:/Program Files/Audiveris/bin/Audiveris.bat",
-        "-export",
-        "-batch",
-        "-output",
-        "C:/Users/jingx/git_wa/ScoreStream-core",
-        input_pdf_filepath,
-    ],
-    # capture_output=True,
-    # text=True,
-)
+# result = subprocess.run(
+#     [
+#         "C:/Program Files/Audiveris/bin/Audiveris.bat",
+#         "-export",
+#         "-batch",
+#         "-output",
+#         "C:/Users/jingx/git_wa/ScoreStream-core",
+#         input_pdf_filepath,
+#     ],
+#     # capture_output=True,
+#     # text=True,
+# )
 
 end = timer()
 print(timedelta(seconds=end - start))
@@ -38,7 +38,9 @@ stream_of_bars = (
     .getElementsByClass(stream.base.Measure)
     .stream()
 )
-polonaise.show("lily")
+polonaise.show("musicxml.png")
+# or, polonaise.show("lily")
+
 last_bar = stream_of_bars[-1].number
 
 seconds_per_bar: int = duration / last_bar
