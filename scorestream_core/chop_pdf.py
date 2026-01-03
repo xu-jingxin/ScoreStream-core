@@ -1,4 +1,7 @@
 from pdf2image import convert_from_path
+from PIL import Image
+import cv2
+import numpy as np
 
 pages = convert_from_path(
     "C:/Users/jingx/git_wa/ScoreStream-core/Polonaise.pdf",
@@ -7,10 +10,7 @@ pages = convert_from_path(
     poppler_path=r"C:\Program Files\poppler-25.12.0\Library\bin",
 )
 
-pages[0].show()
-
-import cv2
-import numpy as np
+# pages[0].show()
 
 
 def binarize(pil_img):
@@ -19,10 +19,8 @@ def binarize(pil_img):
     return bw
 
 
-def find_white_bands(bw_img, min_height=30, max_height=50, width_tol=1.0):
-    """
-    width_tol: fraction of width that must be white (1.0 = fully white)
-    """
+def find_white_bands(bw_img, min_height=15, max_height=100, width_tol=1.0):
+
     h, w = bw_img.shape
     white_rows = []
 
@@ -64,14 +62,95 @@ for page_num, page in enumerate(pages, start=1):
     bands = find_white_bands(bw)
 
     for band in bands:
+        thickness = band[1] - band[0] + 1
         results.append(
             {
                 "page": page_num,
                 "row_start": band[0],
                 "row_end": band[1],
-                "thickness": band[1] - band[0] + 1,
+                "thickness": thickness,
             }
         )
 
 print(results)
 
+
+def bands_to_cuts(bands):
+    """
+    bands: list of (row_start, row_end)
+    returns: sorted list of y cut positions
+    """
+    return sorted((start + end) // 2 for start, end in bands)
+
+
+def crop_page_into_strips(pil_img, cut_rows, min_height=10):
+    """
+    pil_img   : PIL.Image
+    cut_rows  : list of y coordinates
+    min_height: ignore tiny strips
+    """
+    width, height = pil_img.size
+    strips = []
+
+    prev_y = 0
+
+    for y in cut_rows:
+        if y - prev_y >= min_height:
+            strip = pil_img.crop((0, prev_y, width, y))
+            strips.append(strip)
+        prev_y = y
+
+    # last strip
+    if height - prev_y >= min_height:
+        strip = pil_img.crop((0, prev_y, width, height))
+        strips.append(strip)
+
+    return strips
+
+
+all_strips = []
+
+for page_num, page in enumerate(pages, start=1):
+    bw = binarize(page)
+    bands = find_white_bands(bw)
+
+    if not bands:
+        continue
+
+    cuts = bands_to_cuts(bands)
+    strips = crop_page_into_strips(page, cuts)
+
+    for i, strip in enumerate(strips):
+        all_strips.append({"page": page_num, "index": i, "image": strip})
+
+# merge close bands
+min_gap = 350  # <------------------- ADJUST HERE <--------------------
+merged = []
+for y in sorted(cuts):
+    if not merged or y - merged[-1] > min_gap:
+        merged.append(y)
+
+
+# for ele in all_strips:
+#     ele["image"].show()
+
+
+debug = np.array(page).copy()
+
+for y in merged:
+    cv2.line(debug, (0, y), (debug.shape[1], y), 128, 1)
+
+
+def visualise_width(width):
+    cv2.line(debug, (0, 250), (debug.shape[1], 250), (0, 100, 0), 5)
+    cv2.line(debug, (0, 250 + width), (debug.shape[1], 250 + width), (0, 100, 0), 5)
+
+
+visualise_width(600)
+
+Image.fromarray(debug).show()
+
+
+for item in all_strips:
+    fname = f"page_{item['page']}_strip_{item['index']}.png"
+    item["image"].save(fname)
