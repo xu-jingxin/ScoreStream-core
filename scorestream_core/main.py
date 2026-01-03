@@ -15,21 +15,21 @@ print("duration: ", duration)
 
 start = timer()
 
-# result = subprocess.run(
-#     [
-#         "C:/Program Files/Audiveris/bin/Audiveris.bat",
-#         "-export",
-#         "-batch",
-#         "-output",
-#         "C:/Users/jingx/git_wa/ScoreStream-core",
-#         input_pdf_filepath,
-#     ],
-#     # capture_output=True,
-#     # text=True,
-# )
+result = subprocess.run(
+    [
+        "C:/Program Files/Audiveris/bin/Audiveris.bat",
+        "-export",
+        "-batch",
+        "-output",
+        "C:/Users/jingx/git_wa/ScoreStream-core",
+        input_pdf_filepath,
+    ],
+    # capture_output=True,
+    # text=True,
+)
 
 end = timer()
-print(timedelta(seconds=end - start))
+print(timedelta(seconds=end - start))  # this times how long Audiveris takes
 
 polonaise = converter.parse("../Polonaise.mxl")
 
@@ -50,5 +50,5 @@ def end_time(bar_number: int):
     return bar_number * seconds_per_bar
 
 
-# for i in range(1, last_bar):
-#     print(i, end_time(i))
+for i in range(1, last_bar):
+    print(i, end_time(i))
