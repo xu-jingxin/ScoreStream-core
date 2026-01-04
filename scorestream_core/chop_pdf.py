@@ -3,8 +3,10 @@ from PIL import Image
 import cv2
 import numpy as np
 
+# pdf_path = r"C:\Users\jingx\git_wa\ScoreStream-core\scorestream_core\files\Moonlight_Sonata_1_1st_page.pdf"
+pdf_path = "Polonaise.pdf"
 pages = convert_from_path(
-    "C:/Users/jingx/git_wa/ScoreStream-core/Polonaise.pdf",
+    pdf_path,
     dpi=300,
     grayscale=True,  # higher DPI = more accurate pixel thickness
     poppler_path=r"C:\Program Files\poppler-25.12.0\Library\bin",
@@ -19,7 +21,7 @@ def binarize(pil_img):
     return bw
 
 
-def find_white_bands(bw_img, min_height=15, max_height=100, width_tol=1.0):
+def find_white_bands(bw_img, min_height=5, max_height=100, width_tol=1.0):
 
     h, w = bw_img.shape
     white_rows = []
@@ -131,8 +133,8 @@ for y in sorted(cuts):
         merged.append(y)
 
 
-# for ele in all_strips:
-#     ele["image"].show()
+for ele in all_strips:
+    ele["image"].show()
 
 
 debug = np.array(page).copy()
