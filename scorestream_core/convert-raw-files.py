@@ -1,13 +1,12 @@
-from music21 import converter, stream
 import subprocess
 from timeit import default_timer as timer
 from datetime import timedelta
 
-# from basic_pitch.inference import predict_and_save
+# from basic_pitch.inference import predict_and_save <---- can't install - fix python setup
 
 
 input_pdf_filepath = "Polonaise.pdf"
-input_audio_filepath = r"C:\Users\jingx\git_wa\ScoreStream-core\scorestream_core\files\Moonlight_Sonata_1_1st_page.m4a"
+input_audio_filepath = "Polonaise_3_lines.m4a"
 
 
 def call_audiveris(sheet_path):
@@ -30,12 +29,13 @@ def call_audiveris(sheet_path):
     print(timedelta(seconds=end - start))  # this times how long Audiveris takes
 
 
-strips_paths = ["page_1_strip_2.png", "page_1_strip_3.png"]
+strips_paths = ["page_1_strip_2.png", "page_1_strip_3.png", "page_1_strip_4.png"]
 
 for strip in strips_paths:
     call_audiveris(strip)
 
-call_audiveris()
+call_audiveris(input_pdf_filepath)
+
 # predict_and_save(
 #     input_audio_filepath,
 #     r'C:\Users\jingx\git_wa\ScoreStream-core\scorestream_core',

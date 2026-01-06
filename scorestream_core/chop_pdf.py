@@ -133,14 +133,14 @@ for y in sorted(cuts):
         merged.append(y)
 
 
-for ele in all_strips:
-    ele["image"].show()
+for i in range(2, 6):
+    all_strips[i]["image"].show()
 
 
 debug = np.array(page).copy()
 
 for y in merged:
-    cv2.line(debug, (0, y), (debug.shape[1], y), 128, 1)
+    cv2.line(debug, (0, y), (debug.shape[1], y), 128, 3)
 
 
 def visualise_width(width):
@@ -148,7 +148,7 @@ def visualise_width(width):
     cv2.line(debug, (0, 250 + width), (debug.shape[1], 250 + width), (0, 100, 0), 5)
 
 
-visualise_width(600)
+# visualise_width(600)
 
 Image.fromarray(debug).show()
 

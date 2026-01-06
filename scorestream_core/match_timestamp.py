@@ -136,10 +136,3 @@ stamp_Beethoven = Stamper(
     "Polonaise.mxl",
 )
 is_this_a_dict = stamp_Beethoven.stamp()
-print(is_this_a_dict)
-
-strip = converter.parse("page_1_strip_2.mxl").flatten(retainContainers=True)
-measures = strip.getElementsByClass("Measure")
-last_measure = measures[-1]
-number_of_measures = last_measure.measureNumber
-print(is_this_a_dict[number_of_measures])
